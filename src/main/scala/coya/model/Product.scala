@@ -13,3 +13,5 @@ case class House(id: Int, value: Money, address: Address, size: Int) extends Pro
 case class Banana(id: Int, value: Money, blackSpots: Int) extends Product
 
 case class Bicycle(id: Int, value: Money, gears: Int) extends Product
+
+case class Helicopter(id: Int, value: Money) extends Product
