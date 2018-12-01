@@ -6,11 +6,11 @@ import org.scalatest._
 import squants.market.EUR
 
 class CoyaProcessorSpec extends FlatSpec with Matchers with TypeCheckedTripleEquals {
-  val goodAddress = Address(1, 10)
-  val badAddress = Address(1, 500)
+  val goodAddress = Address(1, RiskValue(10))
+  val badAddress = Address(1, RiskValue(500))
 
-  val userOne = User(1, goodAddress, 10)
-  val userTwo = User(2, badAddress, 150)
+  val userOne = User(1, goodAddress, RiskValue(10))
+  val userTwo = User(2, badAddress, RiskValue(150))
 
   val funBike = Bicycle(1, EUR(1000), 18)
   val coolHouse = House(2, EUR(1000000), goodAddress, 40)
