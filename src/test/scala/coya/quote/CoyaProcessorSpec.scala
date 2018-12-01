@@ -20,10 +20,10 @@ class CoyaProcessorSpec extends FlatSpec with Matchers with TypeCheckedTripleEqu
    0.03 * // house base premium value
    0.7 * // house risk surcharge
    0.3 // user risk surcharge
-   = 630 € per year
+   = 6300 € per year
    */
   "userOne with coolHouse" should "receive a good offer" in {
-    CoyaProcessor.priceFor(userOne, List(coolHouse)) should ===(Some(EUR(630)))
+    CoyaProcessor.priceFor(userOne, List(coolHouse)) should ===(Some(EUR(6300)))
   }
 
   /*
