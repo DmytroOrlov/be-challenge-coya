@@ -1,3 +1,3 @@
-package coya.models
+package coya.model
 
 case class Address(id: Int, locationRisk: Int)

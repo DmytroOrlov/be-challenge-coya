@@ -1,6 +1,6 @@
-package coya.quotes
+package coya.quote
 
-import coya.models._
+import coya.model._
 import org.scalatest._
 
 class CoyaProcessorSpec extends FlatSpec with Matchers {

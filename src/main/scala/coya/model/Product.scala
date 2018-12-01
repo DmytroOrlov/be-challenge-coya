@@ -1,4 +1,4 @@
-package coya.models
+package coya.model
 
 sealed trait Product {
   def id: Int

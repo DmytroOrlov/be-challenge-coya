@@ -1,7 +1,7 @@
-package coya.quotes
+package coya.quote
 
-import coya.models.User
-import coya.models.Product
+import coya.model.User
+import coya.model.Product
 
 trait Processor {
   def priceFor(u: User, p: Seq[Product]): Option[BigDecimal]
