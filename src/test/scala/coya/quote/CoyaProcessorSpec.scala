@@ -15,6 +15,8 @@ class CoyaProcessorSpec extends FlatSpec with Matchers with TypeCheckedTripleEqu
   val goodBanana = Banana(1, EUR(1), 3)
   val funBike = Bicycle(1, EUR(1000), 18)
   val coolHouse = House(2, EUR(1000000), goodAddress, 40)
+  val smallHouse = House(2, EUR(1000000), goodAddress, 29)
+  val bigHouse = House(2, EUR(1000000), goodAddress, 1001)
   val expensiveHouse = House(2, EUR(10001000), goodAddress, 40)
 
   /*
@@ -26,6 +28,14 @@ class CoyaProcessorSpec extends FlatSpec with Matchers with TypeCheckedTripleEqu
    */
   "userOne with coolHouse" should "receive a good offer" in {
     CoyaProcessor.priceFor(userOne, List(coolHouse)) should ===(Some(EUR(6300)))
+  }
+
+  "userOne with smallHouse" should "reject" in {
+    CoyaProcessor.priceFor(userOne, List(smallHouse)) should ===(None)
+  }
+
+  "userOne with bigHouse" should "reject" in {
+    CoyaProcessor.priceFor(userOne, List(bigHouse)) should ===(None)
   }
 
   /*

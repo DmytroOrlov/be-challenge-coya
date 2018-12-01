@@ -12,6 +12,7 @@ trait Processor {
 object CoyaProcessor extends Processor {
   def priceFor(user: User, products: Seq[Product]): Option[Money] = {
     def productSurcharge(p: Product): Option[Double] = p match {
+      case h: House if h.size < 30 || h.size > 1000 => none
       case h: House if h.address.locationRisk.value < 100 => 0.7.some
       case _ => 1.0.some
     }
