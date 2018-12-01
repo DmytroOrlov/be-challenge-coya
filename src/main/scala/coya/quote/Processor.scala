@@ -8,5 +8,5 @@ trait Processor {
 }
 
 object CoyaProcessor extends Processor {
-  def priceFor(u: User, p: Seq[Product]): Option[Money] = ???
+  def priceFor(user: User, products: Seq[Product]): Option[Money] = ???
 }
