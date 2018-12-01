@@ -2,6 +2,7 @@ package coya.quote
 
 import coya.model._
 import org.scalatest._
+import squants.market.EUR
 
 class CoyaProcessorSpec extends FlatSpec with Matchers {
   val goodAddress = Address(1, 10)
@@ -10,8 +11,8 @@ class CoyaProcessorSpec extends FlatSpec with Matchers {
   val userOne = User(1, goodAddress, 10)
   val userTwo = User(2, badAddress, 150)
 
-  val funBike = Bicycle(1, BigDecimal(1000), 18)
-  val coolHouse = House(2, BigDecimal(1000000), goodAddress, 40)
+  val funBike = Bicycle(1, EUR(1000), 18)
+  val coolHouse = House(2, EUR(1000000), goodAddress, 40)
 
   /*
    1,000,000 * // house value
