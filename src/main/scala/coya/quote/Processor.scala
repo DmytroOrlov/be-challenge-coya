@@ -1,7 +1,6 @@
 package coya.quote
 
-import coya.model.User
-import coya.model.Product
+import coya.model.{Product, User}
 import squants.market.Money
 
 trait Processor {
