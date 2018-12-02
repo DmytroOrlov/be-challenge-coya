@@ -14,6 +14,9 @@ object CoyaProcessor extends Processor {
     def productSurcharge(p: Product): Option[Double] = p match {
       case h: House if h.size < 30 || h.size > 1000 => none
       case h: House if h.address.locationRisk.value < 100 => 0.7.some
+      case h: House if h.address.locationRisk.value < 300 => 1.0.some
+      case h: House if h.address.locationRisk.value <= 501 => 2.5.some
+      case h: House if h.address.locationRisk.value > 501 => none
       case _ => 1.0.some
     }
 
