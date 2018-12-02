@@ -12,7 +12,7 @@ trait Processor {
 
 object CoyaProcessor extends Processor {
   def priceFor(user: User, products: Seq[Product]): Option[Money] = {
-    def basePremiumValue(p: Product) = p match {
+    val basePremiumValue: Kleisli[Option, Product, Double] = Kleisli {
       case _: House => 0.03.some
       case _: Banana => 1.15.some
       case _: Bicycle => 0.10.some
