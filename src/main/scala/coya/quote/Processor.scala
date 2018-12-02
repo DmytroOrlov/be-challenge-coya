@@ -44,20 +44,21 @@ object CoyaProcessor extends Processor {
       case _ => none
     }
 
-    def applyProductPrice(ps: Seq[Product]) = {
+    def applyProductPrice(u: User, ps: Seq[Product]) = {
       lazy val expensiveHouseExists = ps.exists {
         case h: House if h.value ># EUR(10000000) => true
         case _ => false
       }
       ps.map {
         case h: House if expensiveHouseExists => productPrice(h).map(_ * 1.15)
+        case _: Banana if u.risk.value > 200 => none
         case p => productPrice(p)
       }
     }
 
     for {
       us <- userSurcharge(user)
-      total <- Semigroup.combineAllOption(applyProductPrice(products)).flatten
+      total <- Semigroup.combineAllOption(applyProductPrice(user, products)).flatten
     } yield us * total
   }
 
