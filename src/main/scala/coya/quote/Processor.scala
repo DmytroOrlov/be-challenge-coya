@@ -44,12 +44,12 @@ object CoyaProcessor extends Processor {
       case _ => none
     }
 
-    def applyProductPrice(products: Seq[Product]) = {
-      lazy val expensiveHouseExists = products.exists {
+    def applyProductPrice(ps: Seq[Product]) = {
+      lazy val expensiveHouseExists = ps.exists {
         case h: House if h.value ># EUR(10000000) => true
         case _ => false
       }
-      products.map {
+      ps.map {
         case h: House if expensiveHouseExists => productPrice(h).map(_ * 1.15)
         case p => productPrice(p)
       }
