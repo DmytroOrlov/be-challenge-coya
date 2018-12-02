@@ -18,6 +18,7 @@ object CoyaProcessor extends Processor {
       case h: House if h.address.locationRisk.value <= 501 => 2.5.some
       case h: House if h.address.locationRisk.value > 501 => none
       case b: Banana if b.blackSpots < 3 || b.blackSpots > 12 => none
+      case bc: Bicycle => (bc.gears * 0.08).some
       case _ => 1.0.some
     }
 

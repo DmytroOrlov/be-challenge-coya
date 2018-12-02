@@ -83,6 +83,20 @@ class CoyaProcessorSpec extends FlatSpec with Matchers with TypeCheckedTripleEqu
    1000 * // bike value
    0.10 * // bike base premium value
    (18 * 0.08) * // gears surcharge
+   0.3 // user risk surcharge
+   = 43.2 € per year
+
+   Given that userTwo has a risk value of more than 150 and the total
+   premium is bigger than 100 €, we won't offer him insurance.
+   */
+  "userOne with funBike" should "be denied" in {
+    CoyaProcessor.priceFor(userOne, List(funBike)) should ===(Some(EUR(43.2)))
+  }
+
+  /*
+   1000 * // bike value
+   0.10 * // bike base premium value
+   (18 * 0.08) * // gears surcharge
    1 // user risk surcharge
    = 144 € per year
 
