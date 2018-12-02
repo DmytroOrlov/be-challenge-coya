@@ -12,17 +12,6 @@ trait Processor {
 
 object CoyaProcessor extends Processor {
   def priceFor(user: User, products: Seq[Product]): Option[Money] = {
-    def productSurcharge(p: Product): Option[Double] = p match {
-      case h: House if h.size < 30 || h.size > 1000 => none
-      case h: House if h.address.locationRisk.value < 100 => 0.7.some
-      case h: House if h.address.locationRisk.value < 300 => 1.0.some
-      case h: House if h.address.locationRisk.value <= 501 => 2.5.some
-      case h: House if h.address.locationRisk.value > 501 => none
-      case b: Banana if b.blackSpots < 3 || b.blackSpots > 12 => none
-      case bc: Bicycle => (bc.gears * 0.08).some
-      case _ => 1.0.some
-    }
-
     def basePremiumValue(p: Product) = p match {
       case _: House => 0.03.some
       case _: Banana => 1.15.some
@@ -33,6 +22,17 @@ object CoyaProcessor extends Processor {
     def productSubtotal(p: Product) = for {
       base <- basePremiumValue(p)
     } yield p.value * base
+
+    val productSurcharge: Kleisli[Option, Product, Double] = Kleisli {
+      case h: House if h.size < 30 || h.size > 1000 => none
+      case h: House if h.address.locationRisk.value < 100 => 0.7.some
+      case h: House if h.address.locationRisk.value < 300 => 1.0.some
+      case h: House if h.address.locationRisk.value <= 501 => 2.5.some
+      case h: House if h.address.locationRisk.value > 501 => none
+      case b: Banana if b.blackSpots < 3 || b.blackSpots > 12 => none
+      case bc: Bicycle => (bc.gears * 0.08).some
+      case _ => 1.0.some
+    }
 
     def productPrice(p: Product) = for {
       sub <- productSubtotal(p)
