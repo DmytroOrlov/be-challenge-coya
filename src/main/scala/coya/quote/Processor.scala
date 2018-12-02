@@ -60,6 +60,10 @@ object CoyaProcessor extends Processor {
     for {
       us <- userSurcharge(user)
       total <- Semigroup.combineAllOption(applyProductPrice(user, products)).flatten
+      if !(products.exists {
+        case _: Bicycle => true
+        case _ => false
+      } && user.risk.value >= 150 && total > EUR(100))
     } yield us * total
   }
 
