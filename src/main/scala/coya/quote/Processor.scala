@@ -1,6 +1,7 @@
 package coya.quote
 
 import cats.Semigroup
+import cats.data.Kleisli
 import cats.syntax.option._
 import coya.model._
 import squants.market._
@@ -38,13 +39,6 @@ object CoyaProcessor extends Processor {
       ps <- productSurcharge(p)
     } yield sub * ps
 
-    def userSurcharge(u: User): Option[Double] = u.risk match {
-      case low if low.value <= 20 => 0.3.some
-      case mid if mid.value <= 200 => 1.0.some
-      case hi if hi.value <= 500 => 3.0.some
-      case _ => none
-    }
-
     def applyProductPrice(u: User, ps: Seq[Product]) = {
       lazy val expensiveHouseExists = ps.exists {
         case h: House if h.value ># EUR(10000000) => true
@@ -56,6 +50,13 @@ object CoyaProcessor extends Processor {
         case p => productPrice(p)
       }
     }
+
+    val userSurcharge: Kleisli[Option, User, Double] = Kleisli(_.risk match {
+      case low if low.value <= 20 => 0.3.some
+      case mid if mid.value <= 200 => 1.0.some
+      case hi if hi.value <= 500 => 3.0.some
+      case _ => none
+    })
 
     for {
       us <- userSurcharge(user)
